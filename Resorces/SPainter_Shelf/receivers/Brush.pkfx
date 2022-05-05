@@ -1,0 +1,390 @@
+CParticleEffect	$LOCAL$/Resource
+{
+	OnSpawn = "$LOCAL$/Spawner";
+	CustomAttributes = "$LOCAL$/_GlobalAttributes";
+	Autostart = true;
+}
+CNEdEditorParticle_Data	$LOCAL$/EDITOR
+{
+	Position = float3(1.4662311e+000, 1.1331090e+000, 1.3861589e+000);
+	EulerOrientation = float3(-2.4947996e+001, 4.5814999e+001, 0.0000000e+000);
+	BackdropPath = "Cache/Meshes/DummyMesh.pkml";
+	SubEntityTreeFactory = "$LOCAL$/CEntityWithTransformsFactory_96A00101";
+	AlignToContactSurface = false;
+	AlignToCameraPitch = true;
+	AlignToCameraPlane = true;
+	FollowCursorVelocity = true;
+	UseOverSpawn = true;
+	OverSpawnEffect = "Particles/EmitSingle.pkfx";
+	ShowGrid = true;
+	PauseOnProblematicParticles = true;
+}
+CActionFactoryParticleSpawnerBase	$LOCAL$/Layer_1
+{
+	Descriptor = "$LOCAL$/CParticleDescriptor_AE135B2A";
+	SpawnCountMode = TotalParticleCount;
+	SpawnCount = 1.0000000e+002;
+	DeterminismMode = Determinist;
+	FluxFactorExpression = "SpawnRateFactor";
+}
+CParticleDescriptor	$LOCAL$/CParticleDescriptor_AE135B2A
+{
+	EnableSpawnerIDs = true;
+	Renderer = "$LOCAL$/CParticleRenderer_Billboard_9136D2F4";
+	CustomFields = 
+	{
+		"$LOCAL$/CParticleFieldDeclaration_DDEFE96C",
+		"$LOCAL$/CParticleFieldDeclaration_DC9B927F",
+		"$LOCAL$/CParticleFieldDeclaration_74BAA346",
+		"$LOCAL$/CParticleFieldDeclaration_617E0CFB",
+		"$LOCAL$/CParticleFieldDeclaration_7E1023D2",
+		"$LOCAL$/CParticleFieldDeclaration_0D9D5521",
+		"$LOCAL$/CParticleFieldDeclaration_776319F8",
+		"$LOCAL$/CParticleFieldDeclaration_21CBBEB7",
+		"$LOCAL$/CParticleFieldDeclaration_08D2CC5A",
+		"$LOCAL$/CParticleFieldDeclaration_DD62D525",
+		"$LOCAL$/CParticleFieldDeclaration_DFBA34F2",
+		"$LOCAL$/CParticleFieldDeclaration_D0EB9D9D",
+		"$LOCAL$/CParticleFieldDeclaration_5D5106AA",
+		"$LOCAL$/CParticleFieldDeclaration_665575B5",
+		"$LOCAL$/CParticleFieldDeclaration_8BFABC1C",
+		"$LOCAL$/CParticleFieldDeclaration_69D57342",
+	};
+	CustomAttributes = "$LOCAL$/_GlobalAttributes";
+	Samplers = 
+	{
+		"$LOCAL$/CParticleSamplerShape_1F274CF1",
+		"$LOCAL$/CParticleSamplerShape_04072AF3",
+		"$LOCAL$/CParticleSamplerShape_4B345846",
+		"$LOCAL$/CParticleSamplerTexture_B787BF0F",
+		"$LOCAL$/CParticleSamplerShape_B17F2DE0",
+	};
+	SpawnEvaluator = "$LOCAL$/CCompilerSyntaxNodeExpression_5566F5E7";
+	States = 
+	{
+		"$LOCAL$/CParticleState_3AF8190E",
+	};
+}
+CActionFactoryWithChilds	$LOCAL$/Spawner
+{
+	ChildList = 
+	{
+		"$LOCAL$/Layer_1",
+	};
+}
+CParticleRenderer_Billboard	$LOCAL$/CParticleRenderer_Billboard_9136D2F4
+{
+	Diffuse = "Textures/Sprites/big_glow2_white.dds";
+	SizeField = "BBSize";
+}
+CCompilerSyntaxNodeExpression	$LOCAL$/CCompilerSyntaxNodeExpression_5566F5E7
+{
+	Expression = "function void     Eval()
+{
+	Life = ParticleLife;
+	Size = 1.0;
+	//Position = Spawn.samplePosition();
+	Speed = ParticleSpeed;
+	Velocity = VRand.samplePosition() * ParticleSpeed;
+	Opacity = 1.0;
+	Color = float4(1);
+	Angle = cos(MaxDeriveAngle * pi / 180);
+	RefTime	= select(10000000, ResetAngleRefreshTime, ResetAngleRefresh_Enable > 0.5);
+	NormalFac = NormalFactor;
+	BBSize = 0.01;
+}
+
+function void	PostEval()
+{
+	pCoords = Mesh.projectParametricCoords(Position);
+	UV = Mesh.sampleTexcoord(pCoords);
+}";
+}
+CParticleState	$LOCAL$/CParticleState_3AF8190E
+{
+	StateName = "State_0";
+	Evolvers = 
+	{
+		"$LOCAL$/CParticleEvolver_Script_56DC03CE",
+		"$LOCAL$/CParticleEvolver_Physics_36D6D4BD",
+		"$LOCAL$/CParticleEvolver_Projection_DE0EC905",
+		"$LOCAL$/CParticleEvolver_Script_5EB2BDCB",
+	};
+}
+CParticleEvolver_Physics	$LOCAL$/CParticleEvolver_Physics_36D6D4BD
+{
+	Mass = 0.0000000e+000;
+	IntegrationStrategy = Fast;
+}
+CEntityWithTransformsFactory	$LOCAL$/CEntityWithTransformsFactory_96A00101
+{
+	Scripts = "$LOCAL$/CCompilerSyntaxNodeExpression_B4CACA4B";
+}
+CCompilerSyntaxNodeExpression	$LOCAL$/CCompilerSyntaxNodeExpression_B4CACA4B
+{
+}
+CParticleAttributeList	$LOCAL$/_GlobalAttributes
+{
+	AttributeList = 
+	{
+		"$LOCAL$/CParticleAttributeDeclaration_627905D8",
+		"$LOCAL$/CParticleAttributeDeclaration_B3E6AD7B",
+		"$LOCAL$/CParticleAttributeDeclaration_780AD84C",
+		"$LOCAL$/CParticleAttributeDeclaration_64C2ADB3",
+		"$LOCAL$/CParticleAttributeDeclaration_7A1DB37E",
+		"$LOCAL$/CParticleAttributeDeclaration_EE5A7919",
+		"$LOCAL$/CParticleAttributeDeclaration_06068D69",
+	};
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_DDEFE96C
+{
+	FieldName = "Normal";
+	FieldType = float3;
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_DC9B927F
+{
+	FieldName = "UV";
+	FieldType = float2;
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_74BAA346
+{
+	FieldName = "pCoords";
+	FieldType = int3;
+}
+CParticleSamplerShape	$LOCAL$/CParticleSamplerShape_1F274CF1
+{
+	SamplerName = "Spawn";
+	Shape = "$LOCAL$/CShapeDescriptor_F9F3BBF0";
+}
+CShapeDescriptor	$LOCAL$/CShapeDescriptor_F9F3BBF0
+{
+	ShapeType = SPHERE;
+	Radius = 9.9999997e-005;
+}
+CParticleSamplerShape	$LOCAL$/CParticleSamplerShape_04072AF3
+{
+	SamplerName = "Mesh";
+	Shape = "$LOCAL$/CShapeDescriptor_5C52A9EA";
+}
+CShapeDescriptor	$LOCAL$/CShapeDescriptor_5C52A9EA
+{
+	ShapeType = MESH;
+	MeshResource = "Meshes/DummyMesh.pkmm";
+}
+CParticleAttributeDeclaration	$LOCAL$/CParticleAttributeDeclaration_06068D69
+{
+	AttributeName = "SpawnRateFactor";
+	DefaultValueF4 = float4(1.0000000e+000, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
+	HasMin = true;
+	HasMax = true;
+	MaxValueF4 = float4(5.0000000e+000, 1.0000000e+000, 1.0000000e+000, 1.0000000e+000);
+	MaxValueI4 = int4(10, 10, 10, 10);
+}
+CParticleEvolver_Script	$LOCAL$/CParticleEvolver_Script_56DC03CE
+{
+	Expression = "$LOCAL$/CCompilerSyntaxNodeExpression_77FF4B59";
+}
+CCompilerSyntaxNodeExpression	$LOCAL$/CCompilerSyntaxNodeExpression_77FF4B59
+{
+	Expression = "function void	Eval()
+{
+	PrevPos = Position;
+
+	float3		normal = normalize(Mesh.sampleNormal(pCoords));
+	float4		rawtangent = Mesh.sampleTangent(pCoords);
+	float3		binormal = normalize(cross(normal, rawtangent.xyz) * rawtangent.w);
+	float3		tangent = cross(normal, binormal);
+	float3		rawbump = (NormalMap.sample(UV).xyz * 2 - 1).xyz;
+	float3		bump = rawbump * float3(-NormalFac, NormalFac, 1);
+	normal = normalize(bump.x * tangent.xyz + bump.y * binormal + bump.z * normal);
+	Normal = normal;
+	
+	//Velocity = Velocity - normal * dot(normal, Velocity);
+
+	Velocity = normalize(Velocity) * Speed;
+}
+";
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_7E1023D2
+{
+	FieldName = "Opacity";
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_617E0CFB
+{
+	FieldName = "Seed";
+	FieldType = int;
+}
+CParticleEvolver_Script	$LOCAL$/CParticleEvolver_Script_5EB2BDCB
+{
+	Expression = "$LOCAL$/CCompilerSyntaxNodeExpression_3A9CFAEA";
+}
+CCompilerSyntaxNodeExpression	$LOCAL$/CCompilerSyntaxNodeExpression_3A9CFAEA
+{
+	Expression = "function void	Eval()
+{
+
+	// anti jump check
+	float3			realVel = (Position - PrevPos) / dt;
+	// detect jump but not during the first frame
+	int				jumped = (abs(length(realVel) - Speed) > 0.1 * Speed) & (CumulTime > dt);
+
+	float			d1 = dot(Normal, PrevNormal);
+	float			d2 = dot(normalize(Velocity), normalize(PrevVel));
+	int				trig = ((d1 + d2) * 0.5 < Angle) & (CumulTime > 0.0);
+	kill(trig | jumped);
+	//kill(trig);
+	
+	//float			t = acos(cos(pi));
+	//kill(t > pi + 0.1 || t < pi - 0.1);
+
+	float3			normal = normalize(Mesh.sampleNormal(pCoords));
+
+	// Refresh PrevVel if nessecary
+	int				refresh = CumulTime == 0 || CumulTime >= RefTime;
+	PrevVel = select(PrevVel, Velocity, refresh);
+	PrevNormal = select(PrevNormal, select(Normal, normal, CumulTime == 0), refresh);
+	CumulTime = select(CumulTime, 0, refresh);
+
+	CumulTime += dt;
+
+	// Substance variables
+	Normal = normal; // re-sample real normal
+	UV = Mesh.sampleTexcoord(pCoords);
+	Seed = int(rand(0,20000000));
+
+	Color = float4(Color.xyz, Opacity);
+}
+";
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_0D9D5521
+{
+	FieldName = "Size";
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_776319F8
+{
+	FieldName = "Color";
+	FieldType = float4;
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_21CBBEB7
+{
+	FieldName = "Speed";
+}
+CParticleSamplerShape	$LOCAL$/CParticleSamplerShape_4B345846
+{
+	SamplerName = "Vel";
+	Shape = "$LOCAL$/CShapeDescriptor_52581981";
+}
+CShapeDescriptor	$LOCAL$/CShapeDescriptor_52581981
+{
+	ShapeType = SPHERE;
+}
+CParticleAttributeDeclaration	$LOCAL$/CParticleAttributeDeclaration_627905D8
+{
+	AttributeName = "ParticleLife";
+	DefaultValueF4 = float4(1.0000000e+001, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
+	HasMin = true;
+	HasMax = true;
+	MaxValueF4 = float4(1.0000000e+001, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
+}
+CParticleAttributeDeclaration	$LOCAL$/CParticleAttributeDeclaration_B3E6AD7B
+{
+	AttributeName = "ParticleSpeed";
+	DefaultValueF4 = float4(1.0000000e-001, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
+	HasMin = true;
+	HasMax = true;
+	MinValueF4 = float4(9.9999998e-003, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
+	MaxValueF4 = float4(5.0000000e-001, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_08D2CC5A
+{
+	FieldName = "PrevVel";
+	FieldType = float3;
+	TransformFilter = rotate;
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_DD62D525
+{
+	FieldName = "Angle";
+}
+CParticleAttributeDeclaration	$LOCAL$/CParticleAttributeDeclaration_780AD84C
+{
+	AttributeName = "MaxDeriveAngle";
+	AttributeDescription = "Kill particle at this delta angle\\nKill the particle if the angle beetween the Normal at spawn and the current Normal exceed this value.";
+	DefaultValueF4 = float4(1.0000000e+001, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
+	HasMin = true;
+	HasMax = true;
+	MaxValueF4 = float4(1.8000000e+002, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_D0EB9D9D
+{
+	FieldName = "RefTime";
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_DFBA34F2
+{
+	FieldName = "CumulTime";
+}
+CParticleAttributeDeclaration	$LOCAL$/CParticleAttributeDeclaration_64C2ADB3
+{
+	AttributeName = "ResetAngleRefreshTime";
+	AttributeDescription = "Used if ResetAngleRefresh_Enable=1";
+	DefaultValueF4 = float4(1.0000000e-001, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
+	HasMin = true;
+	HasMax = true;
+	MaxValueF4 = float4(1.0000000e+000, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
+}
+CParticleSamplerTexture	$LOCAL$/CParticleSamplerTexture_B787BF0F
+{
+	SamplerName = "NormalMap";
+	TextureResource = "Textures/Reference_bump.png";
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_8BFABC1C
+{
+	FieldName = "NormalFac";
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_5D5106AA
+{
+	FieldName = "PrevPos";
+	FieldType = float3;
+	TransformFilter = full;
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_665575B5
+{
+	FieldName = "PrevNormal";
+	FieldType = float3;
+}
+CParticleAttributeDeclaration	$LOCAL$/CParticleAttributeDeclaration_7A1DB37E
+{
+	AttributeName = "NormalFactor";
+	AttributeDescription = "Scales the normal";
+	DefaultValueF4 = float4(1.0000000e+000, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
+	HasMin = true;
+	HasMax = true;
+	MaxValueF4 = float4(4.0000000e+000, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
+}
+CParticleAttributeDeclaration	$LOCAL$/CParticleAttributeDeclaration_EE5A7919
+{
+	AttributeName = "ResetAngleRefresh_Enable";
+	AttributeDescription = "Set to 1 to use to refresh the \"Normal at spawn\"\\nIf equals to 1, the Normal used for MaxDeriveAngle is refreshed every ResetAngleRefreshTime instead of using the true Normal at spawn.";
+	DefaultValueI4 = int4(1, 0, 0, 0);
+	HasMin = true;
+	HasMax = true;
+	MaxValueF4 = float4(1.0000000e+000, 0.0000000e+000, 0.0000000e+000, 0.0000000e+000);
+	MaxValueI4 = int4(1, 0, 0, 0);
+}
+CParticleFieldDeclaration	$LOCAL$/CParticleFieldDeclaration_69D57342
+{
+	FieldName = "BBSize";
+}
+CParticleEvolver_Projection	$LOCAL$/CParticleEvolver_Projection_DE0EC905
+{
+	Shape = "Mesh";
+	OutputParametricCoordsField = "pCoords";
+}
+CParticleSamplerShape	$LOCAL$/CParticleSamplerShape_B17F2DE0
+{
+	SamplerName = "VRand";
+	Shape = "$LOCAL$/CShapeDescriptor_173C7223";
+}
+CShapeDescriptor	$LOCAL$/CShapeDescriptor_173C7223
+{
+	ShapeType = SPHERE;
+}
